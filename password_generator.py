@@ -38,7 +38,7 @@ def check_hash(password, hashed_password):
             print('Password has been hacked, generating new password.')
             run()
     pyperclip.copy(password)
-    print('Found a good password, copied to clipboard')
+    print('Found a good password, copied to clipboard.')
 
 
 if __name__ == '__main__':
