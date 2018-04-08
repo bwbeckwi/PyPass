@@ -8,13 +8,17 @@ This program takes a password (defaulted at a length of 24 characters), hashes i
 **Note, if you are on Linux and receiving a Not Implemented Error, try `sudo apt-get install xclip`, that should solve the issue.**
 
 ## Prerequesites 
-**use pip or pip3 respectively**
+**use pip or pip3 respectively**, this project was built in python 3.5 and has not been otherwise tested.
 
 `pip install fire`
 
 `pip install pyperclip`
 
 `pip install requests`
+
+## Use
+This project utilizes an unoffical Google package called [Fire](https://github.com/google/python-fire), it's sort of an auto CLI tool creator. Pretty awesome actually. Anyway, to run this program once you have everything downloaded and installed, use
+`python3 password_generator.py run` in it's respective directory. 
 
 ### Work in progress
 This program assumes you have working internet and all of that jazz, so there is currently minimal error handling, however, it will be improving over a period of time as I get time to work on it. :D. 
