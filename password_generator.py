@@ -1,8 +1,9 @@
 import hashlib
-import random
 import fire
 import requests
 import pyperclip
+import secrets
+
 
 def run(int_length=24):
     password = generate_password(int_length)
@@ -12,7 +13,7 @@ def run(int_length=24):
 
 
 def generate_password(int_length):
-    return (''.join(random.choice(
+    return (''.join(secrets.choice(
         'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890`~!@#$%^&*()-=+_:"/.,<>[]\{\}\\\'') for i in range(int_length)))
 
 
