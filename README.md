@@ -27,9 +27,7 @@ Then you can run python3.6 from a terminal to utilize this password generator in
 
 ## Use
 This project utilizes an unoffical Google package called [Fire](https://github.com/google/python-fire), it's sort of an auto CLI tool creator. Pretty awesome actually. Anyway, to run this program once you have everything downloaded and installed, use
-`python3 password_generator.py run` in it's respective directory. 
-
-**If you upgraded to Python 3.6** use `python3.6 password_generator.py run`. Or whatever your environment variables dictate.
+`python3.6 password_generator.py run` in it's respective directory. 
 
 ### Work in progress
 This program assumes you have working internet and all of that jazz, so there is currently minimal error handling, however, it will be improving over a period of time as I get time to work on it. :D. 
