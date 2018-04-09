@@ -1,11 +1,16 @@
 import hashlib
-import fire
+import click
 import requests
 import pyperclip
 import secrets
 
 
-def run(int_length=24):
+@click.command()
+@click.argument('int_length', type=int)
+def run(int_length):
+    """Generates a random password using Python 3.6's secrets library, runs it through the SHA1 hashing algorithm, and checks it against
+    haveibeenpwned.com's password range API. If the password is good, it conveniently copies it to the clipboard, if not, it runs recursively
+    until it finds a good password (one that has not been found during any known data breaches."""
     password = generate_password(int_length)
     hashed_password = generate_hash(password)
     check_hash(password, hashed_password)
@@ -42,5 +47,4 @@ def check_hash(password, hashed_password):
 
 
 if __name__ == '__main__':
-    fire.Fire()
-
+        run()
