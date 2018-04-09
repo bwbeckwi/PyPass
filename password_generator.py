@@ -42,5 +42,5 @@ def check_hash(password, hashed_password):
 
 
 if __name__ == '__main__':
-    fire.Fire()
+    fire.Fire(run)
 
