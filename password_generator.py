@@ -10,20 +10,20 @@ import csv
 @click.argument('int_length', type=int)
 @click.option('--int_num_pw', '-i' , default=1, type=int, help='Number of passwords to be generated.')
 @click.option('--write/--no-write', default=False, help='Write to CSV or stdout.')
-def run(int_length, int_num_pw, write):
+def generate_passwords(int_length, int_num_pw, write):
     """Generates a random password using Python 3.6's secrets library, runs it through the SHA1 hashing algorithm, and checks it against
     haveibeenpwned.com's password range API. If the password is good, it conveniently copies it to the clipboard (for single passwords),
     else it will print the list of paswords. If the password fails the test, a new one will be generated and returned."""
     password_list = []
     if int_num_pw == 1:
-        password = generate_password(int_length)
+        password = create_password(int_length)
         hashed_password = generate_hash(password)
         check_hash(password, hashed_password, int_length, int_num_pw)
         pyperclip.copy(password)
         print('Copied password to clipboard.')
     elif int_num_pw > 1:
         while int_num_pw > 0:
-            password = generate_password(int_length)
+            password = create_password(int_length)
             hashed_password = generate_hash(password)
             good_password = check_hash(password, hashed_password, int_length, int_num_pw)
             password_list.append(good_password)
@@ -43,7 +43,7 @@ def run(int_length, int_num_pw, write):
         return 'Error, number of passwords to be generated must be greater than zero.'
 
 
-def generate_password(int_length):
+def create_password(int_length):
     print('Generating password...')
     return (''.join(secrets.choice(
         'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890`~!@#$%^&*()-=+_:"/.,<>[]\{\}\\\'') for i in range(int_length)))
@@ -69,7 +69,7 @@ def check_hash(password, hashed_password, int_length, int_num_pw):
         current_hash  = item.split(':')[0]
         if remaining in current_hash:
             print('Password has been hacked, generating new password.')
-            password = generate_password(int_length)
+            password = create_password(int_length)
             hashed_password = generate_hash(password)
             good_password = check_hash(password, hashed_password, int_length, int_num_pw)
             return good_password
@@ -77,6 +77,7 @@ def check_hash(password, hashed_password, int_length, int_num_pw):
             print('Password is good.')
             return password
 
+
 if __name__ == '__main__':
-        run()
+        generate_passwords()
 
