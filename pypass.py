@@ -6,7 +6,12 @@ import secrets
 import csv
 
 
-@click.command()
+@click.group()
+def cli():
+    pass
+
+
+@cli.command()
 @click.argument('int_length', type=int)
 @click.option('--int_num_pw', '-i' , default=1, type=int, help='Number of passwords to be generated.')
 @click.option('--write/--no-write', default=False, help='Write to CSV or stdout.')
@@ -43,6 +48,14 @@ def generate_passwords(int_length, int_num_pw, write):
         return 'Error, number of passwords to be generated must be greater than zero.'
 
 
+@cli.command()
+@click.argument('password_list', type=str, nargs=-1)
+def test_passwords():
+    for password in password_list:
+        hashed_password = generate_hash(password)
+        check_hash(password, hashed_password, 0, 0)
+
+
 def create_password(int_length):
     print('Generating password...')
     return (''.join(secrets.choice(
@@ -68,16 +81,19 @@ def check_hash(password, hashed_password, int_length, int_num_pw):
     for item in r_list:
         current_hash  = item.split(':')[0]
         if remaining in current_hash:
-            print('Password has been hacked, generating new password.')
-            password = create_password(int_length)
-            hashed_password = generate_hash(password)
-            good_password = check_hash(password, hashed_password, int_length, int_num_pw)
-            return good_password
+            if int_length:
+                print('Password has been hacked, generating new password.')
+                password = create_password(int_length)
+                hashed_password = generate_hash(password)
+                good_password = check_hash(password, hashed_password, int_length, int_num_pw)
+                return good_password
+            else:
+                print('Password "{}" has been hacked.'.format(password))
         else:
-            print('Password is good.')
+            print('Password {} is good.'.format(password))
             return password
 
 
 if __name__ == '__main__':
-        generate_passwords()
+        cli()
 
