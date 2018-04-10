@@ -6,6 +6,10 @@ import secrets
 import csv
 
 
+# write in list of chars to exclude as a flag to generate_passwords().
+# write in a method to replace characters if they have already been seen in the given/generated password. If they have been seen, also add to exclude list.
+
+
 @click.group()
 def cli():
     pass
@@ -50,7 +54,7 @@ def generate_passwords(int_length, int_num_pw, write):
 
 @cli.command()
 @click.argument('password_list', type=str, nargs=-1)
-def test_passwords():
+def test_passwords(password_list):
     for password in password_list:
         hashed_password = generate_hash(password)
         check_hash(password, hashed_password, 0, 0)
@@ -58,8 +62,25 @@ def test_passwords():
 
 def create_password(int_length):
     print('Generating password...')
-    return (''.join(secrets.choice(
+    char_list = []
+    password = (''.join(secrets.choice(
         'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890`~!@#$%^&*()-=+_:"/.,<>[]\{\}\\\'') for i in range(int_length)))
+    for c in password:
+        if c in char_list:
+            c = create_char()
+            char_list.append(c)
+        else:
+            char_list.append(c)
+    new_password = ''
+    for char in char_list:
+        new_password.join(c)
+
+    return password
+
+
+def create_char():
+    return ''.join(secrets.choice('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890`~!@#$%^&*()-=+_:"/.,<>[]\{\}\\\'') for i in range(1))
+
 
 
 def generate_hash(str_password):
