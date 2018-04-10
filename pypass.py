@@ -62,25 +62,13 @@ def test_passwords(password_list):
 
 def create_password(int_length):
     print('Generating password...')
-    char_list = []
-    password = (''.join(secrets.choice(
-        'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890`~!@#$%^&*()-=+_:"/.,<>[]\{\}\\\'') for i in range(int_length)))
-    for c in password:
-        if c in char_list:
-            c = create_char()
-            char_list.append(c)
-        else:
-            char_list.append(c)
-    new_password = ''
-    for char in char_list:
-        new_password.join(c)
+    password = ''.join(secrets.choice(
+        'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890`~!@#$%^&*()-=+_:"/.,<>[]\{\}\\\'') for i in range(int_length))
 
     return password
 
-
 def create_char():
     return ''.join(secrets.choice('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890`~!@#$%^&*()-=+_:"/.,<>[]\{\}\\\'') for i in range(1))
-
 
 
 def generate_hash(str_password):
