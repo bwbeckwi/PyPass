@@ -38,7 +38,7 @@ def generate_passwords(int_length, int_num_pw, write):
             password_list.append(good_password)
             int_num_pw -= 1
         if write:
-            print('\nPasswords have been written into "passwords.csv"\n')
+            print('\nPasswords have been written to "passwords.csv"\n')
             with open('passwords.csv', 'w', newline='') as csv_file:
                 csv_writer = csv.writer(csv_file)
                 for pw in password_list:
