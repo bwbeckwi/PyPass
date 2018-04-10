@@ -3,12 +3,14 @@ import click
 import requests
 import pyperclip
 import secrets
+import csv
 
 
 @click.command()
 @click.argument('int_length', type=int)
-@click.option('--int_num_pw', default=1, type=int, help='Number of passwords to be generated.')
-def run(int_length, int_num_pw):
+@click.option('--int_num_pw', '-i' , default=1, type=int, help='Number of passwords to be generated.')
+@click.option('--write/--no-write', default=False, help='Write to CSV or stdout.')
+def run(int_length, int_num_pw, write):
     """Generates a random password using Python 3.6's secrets library, runs it through the SHA1 hashing algorithm, and checks it against
     haveibeenpwned.com's password range API. If the password is good, it conveniently copies it to the clipboard (for single passwords),
     else it will print the list of paswords. If the password fails the test, a new one will be generated and returned."""
@@ -26,9 +28,17 @@ def run(int_length, int_num_pw):
             good_password = check_hash(password, hashed_password, int_length, int_num_pw)
             password_list.append(good_password)
             int_num_pw -= 1
-        print('\n\nPasswords are as follows:\n')
-        for pw in password_list:
-            print(pw)
+        if write:
+            print('\nPasswords have been written into "passwords.csv"\n')
+            with open('passwords.csv', 'w', newline='') as csv_file:
+                csv_writer = csv.writer(csv_file)
+                for pw in password_list:
+                    csv_writer.writerow([pw])
+        else:
+            print('\n\nPasswords are as follows:\n')
+            for pw in password_list:
+                print(pw)
+
     elif int_num_pw <= 0:
         return 'Error, number of passwords to be generated must be greater than zero.'
 
